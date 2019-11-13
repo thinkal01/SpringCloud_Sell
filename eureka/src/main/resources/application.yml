@@ -1,0 +1,29 @@
+# 服务端口号
+server:
+  port: 8100
+# 定义服务名称
+spring:
+  profiles:
+    active: eureka2
+  application:
+    name: eureka
+eureka:
+  instance:
+    # 注册中心ip地址
+    hostname: 127.0.0.1
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    serviceUrl:
+      # 注册地址
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    # 是否需要将自己注册（集群需要为true）,默认true
+    register-with-eureka: true
+    # 单点的EurekaServer，不需要去检索其它EurekaServer节点数据,集群为true,默认为true
+    fetch-registry: true
+  server:
+    # 测试时关闭自我保护机制，保证不可用服务及时踢出
+    enable-self-preservation: false
+    # 踢除失效服务间隔,默认60*1000ms
+    eviction-interval-timer-in-ms: 2000
+    #不读取只读的缓存服务清单，因为30秒刷新一次比较慢，读写高速缓存过期策略
+    use-read-only-response-cache: false

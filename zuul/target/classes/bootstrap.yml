@@ -1,0 +1,35 @@
+server:
+  port: 8040
+spring:
+  application:
+    name: api-gateway
+#  cloud:
+#    config:
+#      discovery:
+#        enabled: true
+#        service-id: CONFIG
+#      profile: dev
+eureka:
+  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+    service-url:
+#      defaultZone: http://localhost:8761/eureka/,http://eureka2:8762/eureka/
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    # 启用ip配置,在注册中心列表中是以ip+端口呈现的
+    prefer-ip-address: true
+    # 实例名称,最后呈现地址：ip:端口
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+
+zuul:
+#  ignoredServices: '*' # 忽略所有请求
+  routes:
+    order: /201/** # 注册的服务名:路径->将服务名映射到ecom
+    common:
+      path: /**
+      # forward模式 直接转发至zuul提供的rest服务,zuul直接处理请求
+      url: forward:/home/common
+
+#暴露端点
+management.endpoints.web.exposure.include: '*'

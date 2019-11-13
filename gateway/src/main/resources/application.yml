@@ -1,0 +1,39 @@
+server:
+  port: 8082
+spring:
+  profiles:
+    active: dev
+  application:
+    name: gateway
+#  cloud:
+#    config:
+#      discovery:
+#        enabled: true
+#        service-id: config
+#      profile: dev
+
+# 需要用一致性hash处理的服务
+consistentHashService: "{client: 'phone'}"
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    # eureka client刷新本地缓存服务列表时间，默认30
+    registry-fetch-interval-seconds: 1
+  instance:
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    org.springframework.http.server.reactive: INFO
+    org.springframework.web.reactive: INFO
+    reactor.ipc.netty: INFO
+ribbon:
+  # 饥饿加载模式
+  eager-load:
+    enabled: true

@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: client
+  profiles:
+    active: client2
+eureka:
+   # 开启健康检查（spring-boot-starter-actuator依赖）,可以采取让其剔除不健康节点
+#  healthcheck:
+#    enabled: true
+  client:
+    service-url:
+      # 服务注册到eureka地址
+      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
+    # 需要向注册中心注册
+    register-with-eureka: true
+    # 是否需要从eureka上获取注册信息
+    fetch-registry: true
+    # 间隔多久去拉取服务注册信息刷新本地缓存服务列表，默认为30秒，对于api-gateway，如果要迅速获取服务注册状态，可以缩小该值
+    registry-fetch-interval-seconds: 1
+  instance:
+    # 设置微服务调用地址为IP优先（缺省为false）
+    prefer-ip-address: false
+    # 心跳检测检测与续约时间
+    # 测试时将值设置小些，保证服务关闭后注册中心能及时踢出服务
+    # Eureka客户端向服务端发送心跳时间间隔，单位为秒（客户端告诉服务端自己会按照该规则）
+    lease-renewal-interval-in-seconds: 1
+    # Eureka服务端在收到最后一次心跳之后等待的时间上限，单位为秒，超过则剔除（客户端告诉服务端按照此规则等待自己）
+    lease-expiration-duration-in-seconds: 2
+    # 注册中心页面显示的微服务名,@*@引用maven属性
+    # instance-id: ${spring.cloud.client.ip-address}:${server.port}:@project.version@
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}

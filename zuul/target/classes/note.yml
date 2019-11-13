@@ -1,0 +1,62 @@
+路由路径配置
+zuul:
+  # 除 provider-user 服务之外都忽略
+  # 忽略指定服务，用逗号隔开，忽略全部用 *
+  ignored-services: product-service1,product-service2
+  ignoredServices: '*' # 忽略所有请求
+  ignoredPatterns: /**/admin/** # 忽略所有包含 /admin/ 的路径
+  routes:
+    microservice-provider-user: /ecom/** # 注册的服务名:路径->将服务名映射到ecom
+
+# 添加全局路由前缀
+zuul:
+  perfix: /api
+  # 是否将这个代理前缀去掉
+  strip-perfix: false
+  routes:
+    # /api/product/** -> /api/**
+    product-service: /product/**
+
+为了更加细粒度控制路由路径：
+表示只要HTTP请求是 /ecom开始的，就会forward到服务id为users_service的服务上面
+# 服务发现模式
+zuul:
+  routes:
+    users:
+      # 局部,是否将这个代理前缀去掉
+      strip-perfix: false
+      path: /ecom/**  // 路由路径
+      serviceId: users_service // 服务id
+
+# 传统路由配置：不依赖服务发现。
+# 所有以myapi开头的url路由至http://127.0.0.1:2000/下
+# 如http://127.0.0.1:8888/ecom/hello --> http://127.0.0.1:2000/hello
+zuul:
+  routes:
+   users:  // 路由名称，随意，唯一即可
+      path: /ecom/**  // 路由路径
+      url: http://localhost:9000
+      # forward模式 直接转发至zuul提供的rest服务,zuul直接处理请求
+      url: forward:/demo
+
+上述简单url路由配置，不会作为Hystrix Command执行，也不会进行ribbon的负载均衡。
+为了同时指定path 和 url，但是不破坏Zuul的Hystrix和Ribbon特性：
+zuul:
+  routes:
+    users:
+      path: /ecom/**
+      serviceId: microservice-provider-user
+
+默认情况下：Zuul代理所有注册到EurekaServer的微服务，
+路由规则：http://ZUUL_HOST:ZUUL_PORT/微服务实例名(serverId)/** 转发至serviceId对应的微服务。
+如：http://127.0.0.1:8888/eureka-client/hello?name=oKong 最后就是转发至：http://127.0.0.1:2000/hello?name=oKong
+ribbon:
+  eureka:
+    enabled: false // ribbon禁掉Eureka
+  microservice-provider-user:
+    ribbon:
+      listOfServers: localhost:9000,localhost:9001
+或者
+microservice-provider-user:
+  ribbon:
+    listOfServers: example.com,google.com

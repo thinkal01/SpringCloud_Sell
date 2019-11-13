@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+      # 路由ID，保持唯一
+      - id: path_route
+        # 目标服务地址
+        uri: http://localhost:8080
+        order: 0
+        # 路由条件，Predicate 接受一个输入参数，返回一个布尔值结果。
+        # 该接口包含多种默认方法将 Predicate 组合成其他复杂的逻辑（与，或，非）
+        predicates:
+        # 请求路径/foo/bar，目标uri为 http://localhost:8000/bar
+        # /**，匹配多层uri，/*只能匹配一层
+        - Path=/foo/**
+        # 过滤规则
+        filters:
+        # StripPrefix=1过滤器是去掉一个路径过滤器，否则目标uri 为http://localhost:8000/foo/bar
+        - StripPrefix=0
+      discovery:
+        locator:
+          # 与服务注册组件进行结合，通过serviceId转发到具体服务实例。默认为false
+          # http://网关地址:端口/注册serviceId/具体url
+          # 默认使用了全局过滤器 LoadBalancerClient
+          enabled: true
+          # service-id小写
+          lower-case-service-id: true
