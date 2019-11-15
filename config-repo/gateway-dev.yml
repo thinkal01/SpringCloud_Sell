@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: dev
+
+# 需要用一致性hash处理的服务
+consistentHashService: "{client: 'phone'}"
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    org.springframework.http.server.reactive: INFO
+    org.springframework.web.reactive: INFO
+    reactor.ipc.netty: INFO
+ribbon:
+  # 饥饿加载模式
+  eager-load:
+    enabled: true
