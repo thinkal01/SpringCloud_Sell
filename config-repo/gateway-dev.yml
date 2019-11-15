@@ -3,7 +3,7 @@ spring:
     active: dev
 
 # 需要用一致性hash处理的服务
-consistentHashService: "{c*: 'phone'}"
+consistentHashService: "{cl*: 'phone'}"
 
 logging:
   level:
