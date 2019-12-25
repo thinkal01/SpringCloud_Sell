@@ -10,7 +10,7 @@ import org.springframework.cloud.netflix.zuul.filters.pre.PreDecorationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-@Component
+// @Component
 public class ZuulConfig {
     /*@ConfigurationProperties("zuul")
     @RefreshScope

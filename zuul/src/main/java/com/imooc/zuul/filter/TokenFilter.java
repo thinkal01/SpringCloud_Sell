@@ -28,17 +28,25 @@ public class TokenFilter extends ZuulFilter {
         return true;
     }
 
+    // 拦截判断服务接口上是否有传递userToken参数
     @Override
     public Object run() {
-        RequestContext requestContext = RequestContext.getCurrentContext();
-        HttpServletRequest request = requestContext.getRequest();
-
-        //这里从url参数里获取, 也可以从cookie, header里获取
-        String token = request.getParameter("token");
-        if (StringUtils.isEmpty(token)) {
-            requestContext.setSendZuulResponse(false);
-            requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
+        // 1.获取上下文
+        RequestContext currentContext = RequestContext.getCurrentContext();
+        // 2.获取Request
+        HttpServletRequest request = currentContext.getRequest();
+        // 3.从请求头中获取token
+        String userToken = request.getParameter("userToken");
+        // 从url参数中获取
+        // String userToken = request.getParameter("userToken");
+        if (StringUtils.isEmpty(userToken)) {
+            // 不会继续执行，网关服务直接响应给客户端
+            currentContext.setSendZuulResponse(false);
+            currentContext.setResponseBody("userToken is null");
+            currentContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
         }
+
+        // 正常执行
         return null;
     }
 }

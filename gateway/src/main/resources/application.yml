@@ -1,31 +1,9 @@
-server:
-  port: 8082
-spring:
-  profiles:
-    active: dev
-  application:
-    name: gateway
-#  cloud:
-#    config:
-#      discovery:
-#        enabled: true
-#        service-id: config
-#      profile: dev
-
-# 需要用一致性hash处理的服务
-consistentHashService: "{client: 'phone'}"
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-    # eureka client刷新本地缓存服务列表时间，默认30
-    registry-fetch-interval-seconds: 1
-  instance:
-    lease-renewal-interval-in-seconds: 1
-    lease-expiration-duration-in-seconds: 2
-    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+consistent:
+  hash:
+    # 需要用一致性hash处理的服务
+    service: "{'cli*': 'iPAddr'}"
+    # 采用一致性hash处理的最大请求体长度
+    maxRequestContentLength: 100000
 
 logging:
   level:

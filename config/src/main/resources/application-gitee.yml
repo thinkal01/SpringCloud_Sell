@@ -1,0 +1,14 @@
+server:
+  port: 8089
+spring:
+  application:
+    name: config
+  cloud:
+    server:
+      git:
+        uri: https://gitee.com/yushengjun/gkconfig.git
+        search-paths:
+        - gkconfig
+      native:
+        search-locations: file:///E:/config
+    label: master

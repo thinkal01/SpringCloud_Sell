@@ -6,9 +6,9 @@ spring:
     name: gateway
   cloud:
     gateway:
-#      default-filters:
-#      - PrefixPath=/httpbin
-#      - AddResponseHeader=X-Response-Default-Foo, Default-Bar
+      #      default-filters:
+      #      - PrefixPath=/httpbin
+      #      - AddResponseHeader=X-Response-Default-Foo, Default-Bar
       routes:
       # 路由ID，保持唯一
       - id: path_route
