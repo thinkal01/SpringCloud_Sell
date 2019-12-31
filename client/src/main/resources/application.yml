@@ -17,6 +17,7 @@ eureka:
     fetch-registry: true
     # 间隔多久去拉取服务注册信息刷新本地缓存服务列表，默认30秒，对于gateway，如果要迅速获取服务注册状态，可以缩小该值
     registry-fetch-interval-seconds: 1
+    should-unregister-on-shutdown: false
   instance:
     # 设置微服务调用地址为IP优先（缺省为false）
     prefer-ip-address: false
