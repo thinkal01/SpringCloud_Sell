@@ -3,6 +3,7 @@ package com.note.expression;
 import com.googlecode.aviator.AviatorEvaluator;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,4 +50,5 @@ public class Test01 {
         end = System.currentTimeMillis();
         System.out.println("加缓存耗时：" + (end - start) + " ms");
     }
+
 }

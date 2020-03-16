@@ -41,4 +41,9 @@ public class ClientApplication {
     private String path() {
         return "path " + client;
     }
+
+    @GetMapping("getId")
+    public Integer getId(int count) {
+        return count;
+    }
 }

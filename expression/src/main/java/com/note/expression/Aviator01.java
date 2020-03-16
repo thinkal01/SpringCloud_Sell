@@ -6,7 +6,6 @@ import com.googlecode.aviator.runtime.function.AbstractFunction;
 import com.googlecode.aviator.runtime.function.FunctionUtils;
 import com.googlecode.aviator.runtime.type.AviatorBigInt;
 import com.googlecode.aviator.runtime.type.AviatorDouble;
-import com.googlecode.aviator.runtime.type.AviatorLong;
 import com.googlecode.aviator.runtime.type.AviatorObject;
 import org.junit.Test;
 
@@ -31,7 +30,7 @@ public class Aviator01 {
     @Test
     public void test02() {
         String name = "zhangsan";
-        Map<String, Object> env = new HashMap<String, Object>();
+        Map<String, Object> env = new HashMap<>();
         env.put("_name", name);
         /**
          * Aviator的String是任何用单引号或者双引号括起来的字符序列，

@@ -1,28 +1,28 @@
 # 服务端口号
 server:
-  port: 8100
+  port: 8761
 # 定义服务名称
 spring:
-  profiles:
-    active: eureka1
+  #  profiles:
+  #    active: eureka2
   application:
-    name: pa-eureka
+    name: ${EUREKA_APPLICATION_NAME:pa-eureka}
 eureka:
   instance:
-    # 注册中心ip地址
-    hostname: 127.0.0.1
+    hostname: ${EUREKA_HOST_NAME:localhost} # 服务主机名
+    appname: ${spring.application.name} # 服务名称，默认为 unknow
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
   client:
     serviceUrl:
       # 注册地址
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-    # 是否需要将自己注册（集群需要为true）,默认true
-    register-with-eureka: true
-    # 单点的EurekaServer，不需要去检索其它EurekaServer节点数据,集群为true,默认为true
-    fetch-registry: true
+      defaultZone: ${EUREKA_URL_LIST:http://${eureka.instance.hostname}:${server.port}/eureka/}
+    # 是否需要将自己注册（集群需要为true）,eureka 实例之间互相发现,默认true
+    register-with-eureka: ${BOOL_REGISTER:true}
+    # 检索其它EurekaServer节点数据,实例之间信息同步。集群为true,默认为true
+    fetch-registry: ${BOOL_FETCH:true}
   server:
-    # 测试时关闭自我保护机制，保证不可用服务及时踢出
-    enable-self-preservation: false
+    # 测试时关闭自我保护机制，保证不可用服务及时踢出,默认为true
+    enable-self-preservation: ${SELF_PRESERVATION:false}
     # 踢除失效服务间隔,默认60*1000ms
     eviction-interval-timer-in-ms: 2000
     #不读取只读的缓存服务清单，因为30秒刷新一次比较慢，读写高速缓存过期策略
