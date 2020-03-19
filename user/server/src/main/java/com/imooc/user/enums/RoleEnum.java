@@ -2,10 +2,6 @@ package com.imooc.user.enums;
 
 import lombok.Getter;
 
-/**
- * Created by 廖师兄
- * 2018-03-04 23:23
- */
 @Getter
 public enum RoleEnum {
     BUYER(1, "买家"),

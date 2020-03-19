@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gateway:
+#      routes:
+#      # 路由ID，保持唯一
+#      - id: predicate_route
+#        # 目标服务地址
+#        uri: http://localhost:8080
+#        predicates:
+#        - Path=/path/**
+#        - Token=Authorization
+      discovery:
+        locator:
+          # 与服务注册组件进行结合，通过serviceId转发到具体服务实例。默认为false
+          # http://网关地址:端口/注册serviceId/具体url
+          # 默认使用了全局过滤器 LoadBalancerClient
+          enabled: true
+          # service-id小写
+          lower-case-service-id: true

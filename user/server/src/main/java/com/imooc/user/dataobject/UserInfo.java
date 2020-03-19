@@ -8,7 +8,6 @@ import javax.persistence.Id;
 @Data
 @Entity
 public class UserInfo {
-
     @Id
     private String id;
 
