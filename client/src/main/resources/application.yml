@@ -3,6 +3,8 @@ spring:
     name: client
   profiles:
     active: client1
+#  messages:
+#    basename: i18n.exception_message
 eureka:
   # 开启健康检查（spring-boot-starter-actuator依赖）,可以采取让其剔除不健康节点
   #  healthcheck:
